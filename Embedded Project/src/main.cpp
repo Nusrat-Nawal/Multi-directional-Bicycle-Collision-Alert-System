@@ -13,6 +13,10 @@ const int echoR = 5;
 const int trigB = 6;
 const int echoB = 7;
 
+float prevDist = 0;
+float speed = 0;
+unsigned long prevTime = 0;
+
 long getDistance(int trig, int echo)
 {
     long sum = 0;
@@ -37,6 +41,25 @@ long getDistance(int trig, int echo)
     return sum/5;
 }
 
+int getRisk(long d, float s)
+{
+    if(d < 10) return 3;
+
+    else if(d < 20 && s > 10)
+        return 3;
+
+    else if(d < 25)
+        return 2;
+
+    else if(d < 30 && s > 5)
+        return 2;
+
+    else if(d < 40)
+        return 1;
+
+    return 0;
+}
+
 void setup()
 {
     lcd.init();
@@ -58,14 +81,42 @@ void loop()
     long dR = getDistance(trigR,echoR);
     long dB = getDistance(trigB,echoB);
 
+    long currDist = min(dL,min(dR,dB));
+
+    unsigned long now = millis();
+    float dt = (now-prevTime)/1000.0;
+
+    if(dt>0)
+  {
+    speed = (prevDist-currDist)/dt;
+
+    if(speed<0)
+        speed = 0;
+  }
+
+     prevDist = currDist;
+     prevTime = now;
+
+     int rL = getRisk(dL,speed);
+     int rR = getRisk(dR,speed);
+     int rB = getRisk(dB,speed);
+
+    bool hasCritical = (rL == 3 || rR == 3 || rB == 3);
+    bool hasHigh     = (rL == 2 || rR == 2 || rB == 2);
+    bool hasWarning  = (rL == 1 || rR == 1 || rB == 1);
+
     lcd.clear();
 
-    lcd.print("L:");
-    lcd.print(dL);
+    if (hasCritical)
+        lcd.print("CRITICAL");
+    else if (hasHigh)
+         lcd.print("HIGH RISK");
+    else if (hasWarning)
+          lcd.print("WARNING");
+    else
+        lcd.print("ALL SAFE");
 
     lcd.setCursor(0,1);
-    lcd.print("R:");
-    lcd.print(dR);
-
+    
     delay(300);
 }
