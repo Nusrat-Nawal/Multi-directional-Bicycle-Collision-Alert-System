@@ -13,9 +13,17 @@ const int echoR = 5;
 const int trigB = 6;
 const int echoB = 7;
 
+const int buzzer = 8;
+const int redLED = 9;
+
+
 float prevDist = 0;
 float speed = 0;
 unsigned long prevTime = 0;
+
+bool ledState = false;
+unsigned long lastBlink = 0;
+
 
 long getDistance(int trig, int echo)
 {
@@ -73,6 +81,16 @@ void setup()
 
     pinMode(trigB,OUTPUT);
     pinMode(echoB,INPUT);
+
+    pinMode(buzzer, OUTPUT);
+    pinMode(redLED, OUTPUT);
+
+    lcd.setCursor(0, 0);
+    lcd.print("System Ready");
+    delay(1500);
+    lcd.clear();
+    
+      prevTime = millis();
 }
 
 void loop()
@@ -117,6 +135,72 @@ void loop()
         lcd.print("ALL SAFE");
 
     lcd.setCursor(0,1);
+
+      int activeCount = 0;
+       if (rL >= 2) activeCount++;
+       if (rR >= 2) activeCount++;
+       if (rB >= 2) activeCount++;
+
+        if (activeCount == 3)
+           {
+             if (rR >= 2) { lcd.print("R"); lcd.print(dR); lcd.print(" "); }
+             if (rL >= 2) { lcd.print("L"); lcd.print(dL); lcd.print(" "); }
+             if (rB >= 2) { lcd.print("B"); lcd.print(dB); lcd.print(" "); }
+           }
+        else
+           {
+             if (rL >= 2) { lcd.print("L:"); lcd.print(dL); lcd.print(" "); }
+             if (rR >= 2) { lcd.print("R:"); lcd.print(dR); lcd.print(" "); }
+             if (rB >= 2) { lcd.print("B:"); lcd.print(dB); lcd.print(" "); }
+
+             if (!hasCritical && !hasHigh)
+               {
+                  if (rL == 1) { lcd.print("L:"); lcd.print(dL); lcd.print(" "); }
+                  if (rR == 1) { lcd.print("R:"); lcd.print(dR); lcd.print(" "); }
+                  if (rB == 1) { lcd.print("B:"); lcd.print(dB); lcd.print(" "); }
+               }
+            }
+
+            //Buzzer and LED control
+      if (!hasWarning && !hasHigh && !hasCritical)
+       {
+          digitalWrite(buzzer, LOW);
+          digitalWrite(redLED, LOW);
+       }
+
+       else if (hasWarning && !hasHigh && !hasCritical)
+       {
+          digitalWrite(buzzer, HIGH);
+          delay(100);
+          digitalWrite(buzzer, LOW);
+          digitalWrite(redLED, LOW);
+       }
+
+       else if (hasHigh && !hasCritical)
+        { digitalWrite(redLED, LOW);
+
+             for (int i = 0; i < 2; i++)
+              {
+                digitalWrite(buzzer, HIGH);
+                 delay(150);
+                 digitalWrite(buzzer, LOW);
+                 delay(100);
+              }
+        }
+
+        else if (hasCritical)
+        {
+             digitalWrite(buzzer, HIGH);
+
+             if (millis() - lastBlink >= 200)
+            {
+               lastBlink = millis();
+                ledState = !ledState;
+                digitalWrite(redLED, ledState);
+            }
+        }
+
+
     
-    delay(300);
+    delay(150);
 }
