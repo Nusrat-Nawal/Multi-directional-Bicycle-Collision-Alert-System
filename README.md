@@ -52,20 +52,13 @@ Activates a red LED only in critical situations <br>
 
 **Output States (LCD Display)** <br>
 1.  SAFE STATE: <br>
-                “All SAFE” <br>
-
+<div align="center">“All SAFE” <br> </div>
 2. WARNING : <br>
-                “WARNING” <br>
-          Shows direction + distance <br>
- 
+<div align="center"> “WARNING” <br> Shows direction + distance <br> </div>
 3. HIGH RISK : <br>
-                “HIGH RISK” <br>
-          Shows direction + distance <br>
-
+<div align="center"> “HIGH RISK” <br> Shows direction + distance <br> </div>
 4. CRITICAL :<br>
-                “CRITICAL” <br>
-          Shows direction + distance <br>
-
+<div align="center">“CRITICAL” <br> Shows direction + distance <br> </div>
 **Components** <br>
 1. Arduino UNO R3 (with USB cable)
 2. HV-SR04 Ultrasonic Sensors (3 sensors)
@@ -84,19 +77,19 @@ Activates a red LED only in critical situations <br>
 **Circuit Diagram**
 ![Circuit Diagram](/Circuit%20Design/Circuit%20Diagram.png)
 
-**Installation** <br>
+**Installation** 
 1. Assemble the hardware components.
 2. Open the Arduino IDE.
 3. Upload the source code to the Arduino Uno.
 4. Connect power and test the system.
 
-**Performance Analysis** <br>
+**Performance Analysis** 
 1. Real-time response achieved 
 2. Accurate distance detection 
 3. Speed-based risk improves reliability 
 4. Reduced false alerts using averaging 
 
-**Future Improvements** <br>
+**Future Improvements** 
 1. Integrating AI for smarter object and risk prediction
 2. Adding GPS and mobile app connectivity for tracking & alerts
 3. Using camera/radar sensors for higher accuracy
