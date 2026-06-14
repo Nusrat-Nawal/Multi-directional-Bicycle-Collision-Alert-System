@@ -51,7 +51,7 @@ Activates a red LED only in critical situations <br>
       ii. Ignores sudden spikes <br>
 
 **Output States (LCD Display)** <br>
-1.  SAFE STATE: <br>
+1. SAFE STATE: <br>
 <div align="center">“All SAFE” <br> </div>
 2. WARNING : <br>
 <div align="center"> “WARNING” <br> Shows direction + distance <br> </div>
@@ -59,13 +59,14 @@ Activates a red LED only in critical situations <br>
 <div align="center"> “HIGH RISK” <br> Shows direction + distance <br> </div>
 4. CRITICAL :<br>
 <div align="center">“CRITICAL” <br> Shows direction + distance <br> </div>
+
 **Components** <br>
-1. Arduino UNO R3 (with USB cable)
-2. HV-SR04 Ultrasonic Sensors (3 sensors)
-3. 16x2 LCD Display (12C Module) 
-4. Buzzer, Resistor (220 ohm) and Red LED
-5. Wires and Breadboard 
-6. Toy Bicycle Model 
+1. Arduino UNO R3 (with USB cable)<br>
+2. HV-SR04 Ultrasonic Sensors (3 sensors)<br>
+3. 16x2 LCD Display (12C Module)<br> 
+4. Buzzer, Resistor (220 ohm) and Red LED<br>
+5. Wires and Breadboard<br>
+6. Toy Bicycle Model <br>
 7. 18650 3.7v Lithium Battery with holder and switch
 
 **Physical Design** <br>
